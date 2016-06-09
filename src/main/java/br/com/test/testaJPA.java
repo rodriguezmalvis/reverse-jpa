@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import br.com.pojos.Atendimento;
+import br.com.pojos.Procedimento;
 import br.com.pojos.Processo;
 import br.com.pojos.ProcessoId;
 import br.com.pojos.SubProcesso;
@@ -31,6 +33,19 @@ public class testaJPA {
 		
 		for (SubProcesso subProcesso : processo.getSubProcessos()) {
 			System.out.println(subProcesso.getId());
+			
+			for (Atendimento atendimento : subProcesso.getAtendimentos()) {
+				
+				System.out.println(atendimento.getIdGuia() + " - " + atendimento.getId());
+				
+				for (Procedimento procedimento : atendimento.getProcedimentos()) {
+					
+					System.out.println(procedimento.getId());
+					
+				}
+				
+			}
+			
 		}
 
 		manager.close();

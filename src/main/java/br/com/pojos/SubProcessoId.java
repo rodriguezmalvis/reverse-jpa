@@ -1,6 +1,5 @@
 package br.com.pojos;
-// default package
-// Generated 09/06/2016 15:23:03 by Hibernate Tools 4.3.1.Final
+// Generated 09/06/2016 17:56:23 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -112,13 +111,6 @@ public class SubProcessoId implements java.io.Serializable {
 		result = 37 * result + this.getDNatureza();
 		result = 37 * result + this.getIdSequencialNatureza();
 		return result;
-	}
-
-	@Override
-	public String toString() {
-		return "SubProcessoId [idProcesso=" + idProcesso + ", anoApresentacao=" + anoApresentacao + ", idRepresentacao="
-				+ idRepresentacao + ", DSubProcesso=" + DSubProcesso + ", DNatureza=" + DNatureza
-				+ ", idSequencialNatureza=" + idSequencialNatureza + "]";
 	}
 
 }

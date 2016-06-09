@@ -1,6 +1,5 @@
 package br.com.pojos;
-// default package
-// Generated 09/06/2016 15:23:03 by Hibernate Tools 4.3.1.Final
+// Generated 09/06/2016 17:56:23 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,9 +27,9 @@ public class Processo implements java.io.Serializable {
 
 	private ProcessoId id;
 	private Date timestamp;
+	private Prestador prestador;
 	private Date dthrApresentacao;
 	private boolean FAnestesista;
-	private Integer idPrestador;
 	private Long numeroCarteira;
 	private Double valorApresentado;
 	private String amApres;
@@ -46,13 +47,13 @@ public class Processo implements java.io.Serializable {
 		this.FAnestesista = FAnestesista;
 	}
 
-	public Processo(ProcessoId id, Date dthrApresentacao, boolean FAnestesista, Integer idPrestador,
+	public Processo(ProcessoId id, Prestador prestador, Date dthrApresentacao, boolean FAnestesista,
 			Long numeroCarteira, Double valorApresentado, String amApres, Integer codRepr, Integer numProc,
 			Integer seqProc, Set<SubProcesso> subProcessos) {
 		this.id = id;
+		this.prestador = prestador;
 		this.dthrApresentacao = dthrApresentacao;
 		this.FAnestesista = FAnestesista;
-		this.idPrestador = idPrestador;
 		this.numeroCarteira = numeroCarteira;
 		this.valorApresentado = valorApresentado;
 		this.amApres = amApres;
@@ -87,6 +88,16 @@ public class Processo implements java.io.Serializable {
 		this.timestamp = timestamp;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_prestador")
+	public Prestador getPrestador() {
+		return this.prestador;
+	}
+
+	public void setPrestador(Prestador prestador) {
+		this.prestador = prestador;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dthr_apresentacao", nullable = false, length = 23)
 	public Date getDthrApresentacao() {
@@ -104,15 +115,6 @@ public class Processo implements java.io.Serializable {
 
 	public void setFAnestesista(boolean FAnestesista) {
 		this.FAnestesista = FAnestesista;
-	}
-
-	@Column(name = "id_prestador")
-	public Integer getIdPrestador() {
-		return this.idPrestador;
-	}
-
-	public void setIdPrestador(Integer idPrestador) {
-		this.idPrestador = idPrestador;
 	}
 
 	@Column(name = "numero_carteira", precision = 17, scale = 0)
@@ -176,14 +178,6 @@ public class Processo implements java.io.Serializable {
 
 	public void setSubProcessos(Set<SubProcesso> subProcessos) {
 		this.subProcessos = subProcessos;
-	}
-
-	@Override
-	public String toString() {
-		return "Processo [id=" + id + ", timestamp=" + timestamp + ", dthrApresentacao=" + dthrApresentacao
-				+ ", FAnestesista=" + FAnestesista + ", idPrestador=" + idPrestador + ", numeroCarteira="
-				+ numeroCarteira + ", valorApresentado=" + valorApresentado + ", amApres=" + amApres + ", codRepr="
-				+ codRepr + ", numProc=" + numProc + ", seqProc=" + seqProc + ", subProcessos=" + subProcessos + "]";
 	}
 
 }

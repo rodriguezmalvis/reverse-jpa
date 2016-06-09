@@ -1,6 +1,5 @@
 package br.com.pojos;
-// default package
-// Generated 09/06/2016 15:23:03 by Hibernate Tools 4.3.1.Final
+// Generated 09/06/2016 17:56:23 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -29,6 +28,7 @@ public class SubProcesso implements java.io.Serializable {
 
 	private SubProcessoId id;
 	private Date timestamp;
+	private Prestador prestador;
 	private Processo processo;
 	private SubProcesso subProcesso;
 	private Date dthrApresentacao;
@@ -44,7 +44,6 @@ public class SubProcesso implements java.io.Serializable {
 	private Short idMotivoSubProcesso;
 	private Short idUsuarioHomologador;
 	private boolean FIntegralmenteNegado;
-	private Integer idPrestador;
 	private boolean FReembolsoSegueCronograma;
 	private boolean FPagamentoBloqueado;
 	private String amApres;
@@ -55,6 +54,7 @@ public class SubProcesso implements java.io.Serializable {
 	private String numeroLote;
 	private Date dtRecebimentoLote;
 	private Integer idProtocolo;
+	private Set<SxmlProtocoloProcesso> sxmlProtocoloProcessos = new HashSet<SxmlProtocoloProcesso>(0);
 	private Set<Atendimento> atendimentos = new HashSet<Atendimento>(0);
 	private Set<SubProcesso> subProcessos = new HashSet<SubProcesso>(0);
 
@@ -72,15 +72,16 @@ public class SubProcesso implements java.io.Serializable {
 		this.FPagamentoBloqueado = FPagamentoBloqueado;
 	}
 
-	public SubProcesso(SubProcessoId id, Processo processo, SubProcesso subProcesso, Date dthrApresentacao,
-			Date dthrInicioDigitacao, Date dthrFimDigitacao, Date mesAnoVigencia, Short idUltimoAtendimentoAnalise,
-			Date dthrHomologacao, Date dthrVerificacao, Date dtPrevistaPagamento, Integer qtdDocumentos,
-			Double valorApresentado, Short idMotivoSubProcesso, Short idUsuarioHomologador,
-			boolean FIntegralmenteNegado, Integer idPrestador, boolean FReembolsoSegueCronograma,
-			boolean FPagamentoBloqueado, String amApres, Integer codRepr, Integer numProc, Integer seqProc,
-			Date dthrDesbloqueio, String numeroLote, Date dtRecebimentoLote, Integer idProtocolo,
+	public SubProcesso(SubProcessoId id, Prestador prestador, Processo processo, SubProcesso subProcesso,
+			Date dthrApresentacao, Date dthrInicioDigitacao, Date dthrFimDigitacao, Date mesAnoVigencia,
+			Short idUltimoAtendimentoAnalise, Date dthrHomologacao, Date dthrVerificacao, Date dtPrevistaPagamento,
+			Integer qtdDocumentos, Double valorApresentado, Short idMotivoSubProcesso, Short idUsuarioHomologador,
+			boolean FIntegralmenteNegado, boolean FReembolsoSegueCronograma, boolean FPagamentoBloqueado,
+			String amApres, Integer codRepr, Integer numProc, Integer seqProc, Date dthrDesbloqueio, String numeroLote,
+			Date dtRecebimentoLote, Integer idProtocolo, Set<SxmlProtocoloProcesso> sxmlProtocoloProcessos,
 			Set<Atendimento> atendimentos, Set<SubProcesso> subProcessos) {
 		this.id = id;
+		this.prestador = prestador;
 		this.processo = processo;
 		this.subProcesso = subProcesso;
 		this.dthrApresentacao = dthrApresentacao;
@@ -96,7 +97,6 @@ public class SubProcesso implements java.io.Serializable {
 		this.idMotivoSubProcesso = idMotivoSubProcesso;
 		this.idUsuarioHomologador = idUsuarioHomologador;
 		this.FIntegralmenteNegado = FIntegralmenteNegado;
-		this.idPrestador = idPrestador;
 		this.FReembolsoSegueCronograma = FReembolsoSegueCronograma;
 		this.FPagamentoBloqueado = FPagamentoBloqueado;
 		this.amApres = amApres;
@@ -107,6 +107,7 @@ public class SubProcesso implements java.io.Serializable {
 		this.numeroLote = numeroLote;
 		this.dtRecebimentoLote = dtRecebimentoLote;
 		this.idProtocolo = idProtocolo;
+		this.sxmlProtocoloProcessos = sxmlProtocoloProcessos;
 		this.atendimentos = atendimentos;
 		this.subProcessos = subProcessos;
 	}
@@ -137,6 +138,16 @@ public class SubProcesso implements java.io.Serializable {
 
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_prestador")
+	public Prestador getPrestador() {
+		return this.prestador;
+	}
+
+	public void setPrestador(Prestador prestador) {
+		this.prestador = prestador;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -291,15 +302,6 @@ public class SubProcesso implements java.io.Serializable {
 		this.FIntegralmenteNegado = FIntegralmenteNegado;
 	}
 
-	@Column(name = "id_prestador")
-	public Integer getIdPrestador() {
-		return this.idPrestador;
-	}
-
-	public void setIdPrestador(Integer idPrestador) {
-		this.idPrestador = idPrestador;
-	}
-
 	@Column(name = "f_reembolso_segue_cronograma", nullable = false)
 	public boolean isFReembolsoSegueCronograma() {
 		return this.FReembolsoSegueCronograma;
@@ -390,6 +392,15 @@ public class SubProcesso implements java.io.Serializable {
 
 	public void setIdProtocolo(Integer idProtocolo) {
 		this.idProtocolo = idProtocolo;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subProcesso")
+	public Set<SxmlProtocoloProcesso> getSxmlProtocoloProcessos() {
+		return this.sxmlProtocoloProcessos;
+	}
+
+	public void setSxmlProtocoloProcessos(Set<SxmlProtocoloProcesso> sxmlProtocoloProcessos) {
+		this.sxmlProtocoloProcessos = sxmlProtocoloProcessos;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subProcesso")

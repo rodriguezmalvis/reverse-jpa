@@ -1,6 +1,5 @@
 package br.com.pojos;
-// default package
-// Generated 09/06/2016 15:23:03 by Hibernate Tools 4.3.1.Final
+// Generated 09/06/2016 17:56:23 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;

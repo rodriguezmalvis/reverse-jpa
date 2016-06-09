@@ -1,6 +1,5 @@
 package br.com.pojos;
-// default package
-// Generated 09/06/2016 15:23:03 by Hibernate Tools 4.3.1.Final
+// Generated 09/06/2016 17:56:23 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -30,6 +29,7 @@ public class Atendimento implements java.io.Serializable {
 	private AtendimentoId id;
 	private Date timestamp;
 	private Atendimento atendimento;
+	private Prestador prestador;
 	private SubProcesso subProcesso;
 	private boolean FCobrancaParcial;
 	private Date dtAtendimento;
@@ -38,7 +38,6 @@ public class Atendimento implements java.io.Serializable {
 	private Long numeroCarteira;
 	private Short dv;
 	private int idDocumento;
-	private Integer idPrestadorReembolso;
 	private String cpfCgcAssociacao;
 	private String matriculaAssociacao;
 	private String cpfCgcSolicitante;
@@ -71,9 +70,9 @@ public class Atendimento implements java.io.Serializable {
 		this.idDocumento = idDocumento;
 	}
 
-	public Atendimento(AtendimentoId id, Atendimento atendimento, SubProcesso subProcesso, boolean FCobrancaParcial,
-			Date dtAtendimento, Integer idGuia, Short idProrrogacaoGuia, Long numeroCarteira, Short dv, int idDocumento,
-			Integer idPrestadorReembolso, String cpfCgcAssociacao, String matriculaAssociacao, String cpfCgcSolicitante,
+	public Atendimento(AtendimentoId id, Atendimento atendimento, Prestador prestador, SubProcesso subProcesso,
+			boolean FCobrancaParcial, Date dtAtendimento, Integer idGuia, Short idProrrogacaoGuia, Long numeroCarteira,
+			Short dv, int idDocumento, String cpfCgcAssociacao, String matriculaAssociacao, String cpfCgcSolicitante,
 			String registroConselhoSolicitante, String horaAtendimento, Integer idProfissionalEquipe,
 			Integer idEndereco, Integer idPrestadorSolicitantePf, Integer idPrestadorServicoPf,
 			Date dthrInicioFaturamento, Date dthrFimFaturamento, String numGuiaPrestador, Character DIndicacaoAcidente,
@@ -82,6 +81,7 @@ public class Atendimento implements java.io.Serializable {
 			Set<Procedimento> procedimentos, Set<Atendimento> atendimentos) {
 		this.id = id;
 		this.atendimento = atendimento;
+		this.prestador = prestador;
 		this.subProcesso = subProcesso;
 		this.FCobrancaParcial = FCobrancaParcial;
 		this.dtAtendimento = dtAtendimento;
@@ -90,7 +90,6 @@ public class Atendimento implements java.io.Serializable {
 		this.numeroCarteira = numeroCarteira;
 		this.dv = dv;
 		this.idDocumento = idDocumento;
-		this.idPrestadorReembolso = idPrestadorReembolso;
 		this.cpfCgcAssociacao = cpfCgcAssociacao;
 		this.matriculaAssociacao = matriculaAssociacao;
 		this.cpfCgcSolicitante = cpfCgcSolicitante;
@@ -157,6 +156,16 @@ public class Atendimento implements java.io.Serializable {
 
 	public void setAtendimento(Atendimento atendimento) {
 		this.atendimento = atendimento;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_prestador_reembolso")
+	public Prestador getPrestador() {
+		return this.prestador;
+	}
+
+	public void setPrestador(Prestador prestador) {
+		this.prestador = prestador;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -237,15 +246,6 @@ public class Atendimento implements java.io.Serializable {
 
 	public void setIdDocumento(int idDocumento) {
 		this.idDocumento = idDocumento;
-	}
-
-	@Column(name = "id_prestador_reembolso")
-	public Integer getIdPrestadorReembolso() {
-		return this.idPrestadorReembolso;
-	}
-
-	public void setIdPrestadorReembolso(Integer idPrestadorReembolso) {
-		this.idPrestadorReembolso = idPrestadorReembolso;
 	}
 
 	@Column(name = "cpf_cgc_associacao", length = 14)
