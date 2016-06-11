@@ -19,7 +19,7 @@ public class testaJPA {
 	
 	public static void pegaSubProcessoPeloID(){
 		
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("reverse-jpa");
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("reverse-jpa-local");
 		EntityManager manager = factory.createEntityManager();
 		
 		Amb amb = manager.find(Amb.class, new AmbId(10101012, 44));
